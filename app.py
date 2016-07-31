@@ -3,6 +3,7 @@ from flask import jsonify
 from flask import make_response
 from flask import request
 from flask import abort
+from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -27,6 +28,12 @@ class Task(db.Model):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 db.create_all()
+
+
+# web site
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
 # API
