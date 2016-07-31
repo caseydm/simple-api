@@ -1,1 +1,36 @@
-Home
+<html>
+<head>
+<title>Home</title>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $.getJSON("http://127.0.0.1:5000/api/v1/tasks", function(result){
+        $.each(result['tasks'], function(key, item){
+            $("div").append('<li>' + item.title + item.description + item.done + '</li>');
+        });
+    });
+
+    $('#task-form').submit(function(event) {
+        var formData = JSON.stringify($("#task-form").serializeArray());
+
+        $.ajax({
+            type: "POST",
+            url: "http://127.0.0.1:5000/api/v1/tasks",
+            data: formData,
+            dataType: "json",
+            contentType : "application/json"
+        });
+    });
+});
+</script>
+</head>
+<body>
+<div></div>
+<p>Add Task</p>
+<form id="task-form">
+    <input name="title" type="text">
+    <input name="description" type="text">
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
