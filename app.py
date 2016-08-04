@@ -1,9 +1,5 @@
-from flask import Flask
-from flask import jsonify
-from flask import make_response
-from flask import request
-from flask import abort
-from flask import render_template
+from flask import Flask, jsonify, make_response, request, abort, \
+    render_template
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -25,7 +21,7 @@ class Task(db.Model):
         self.done = done
 
     def as_dict(self):
-       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 db.create_all()
 
@@ -106,7 +102,6 @@ def delete_task(task_id):
     db.session.delete(task)
     db.session.commit()
     return jsonify({'result': True})
-
 
 if __name__ == '__main__':
     app.run()
