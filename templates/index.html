@@ -4,7 +4,7 @@
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
-    $.getJSON("http://127.0.0.1:5000/api/v1/tasks", function(result){
+    $.getJSON("/api/v1/tasks", function(result){
         $.each(result['tasks'], function(key, item){
             $("div").append('<li>Task:' + item.title + ' Description:' + item.description + 'Status: ' + item.done + '</li>');
         });
@@ -34,20 +34,13 @@ $("#task-form").submit(function(e){
 
     $.ajax({
         type : 'POST',
-        url : 'http://127.0.0.1:5000/api/v1/tasks',
+        url : '/api/v1/tasks',
         data: json,
         contentType: 'application/json;charset=UTF-8',
         success: function(result) {
             console.log(result);
         }
     });
-
-    $('#msgs').append('<div class="msg_container">' + 
-    '<div class="left">' + lastNameVariable + ', ' + firstNameVariable + 
-    '<br />' + timeStampVariable + 
-    '</div><div class="right">' + msg + '</div>' +
-    '<div class="clear"></div></div>');
- }  
 
 });
 </script>
