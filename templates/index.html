@@ -38,7 +38,7 @@ $("#task-form").submit(function(e){
         data: json,
         contentType: 'application/json;charset=UTF-8',
         success: function(result) {
-            console.log(result);
+            $("div").append('<li>Task:' + data["title"] + ' Description:' + data["description"] + 'Status: false</li>');
         }
     });
 
