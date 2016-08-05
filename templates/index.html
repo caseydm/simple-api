@@ -2,15 +2,6 @@
 <head>
 <title>Home</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function () {
-    $.getJSON("/api/v1/tasks", function(result){
-        $.each(result['tasks'], function(key, item){
-            $("div").append('<li>Task:' + item.title + ' Description:' + item.description + 'Status: ' + item.done + '</li>');
-        });
-    });
-});
-</script>
 </head>
 <body>
 <div></div>
@@ -20,29 +11,35 @@ $(document).ready(function () {
     <input id="description" type="text">
     <button type="submit">Submit</button>
 </form>
+</body>
 <script>
-$("#task-form").submit(function(e){
+var html = '';
 
+$.getJSON("/api/v1/tasks", function(result) {
+    result.tasks.forEach(function (item) {
+        html += '<li>Task:' + item.title + ' Description:' + item.description + ' Status:' + item.done + '</li>';
+    });
+
+    $('div').append(html);
+});
+
+$("#task-form").submit(function (e) {
     e.preventDefault();
 
     var data = {
-            'title': document.getElementById('title').value,
-            'description': document.getElementById('description').value
-        };
-
-    var json = JSON.stringify(data);
-
+            'title': $('#title').val(),
+            'description': $('#description').val()
+        }
     $.ajax({
         type : 'POST',
         url : '/api/v1/tasks',
-        data: json,
-        contentType: 'application/json;charset=UTF-8',
-        success: function(result) {
-            $("div").append('<li>Task:' + data["title"] + ' Description:' + data["description"] + 'Status: false</li>');
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=UTF-8',
+        success: function() {
+            $("div").append('<li>Task:' + data.title + ' Description:' + data.description + 'Status: false</li>');
         }
     });
 
 });
 </script>
-</body>
 </html>
