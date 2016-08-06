@@ -6,7 +6,7 @@
 <body>
 <div></div>
 <p>Add Task</p>
-<form id="task-form">
+<form id="taskForm">
     <input id="title" type="text">
     <input id="description" type="text">
     <button type="submit">Submit</button>
@@ -23,7 +23,7 @@ $.getJSON("/api/v1/tasks", function(result) {
     $('div').append(html);
 });
 
-$("#task-form").submit(function (e) {
+$("#taskForm").submit(function (e) {
     e.preventDefault();
 
     var data = {
@@ -37,6 +37,7 @@ $("#task-form").submit(function (e) {
         contentType: 'application/json; charset=UTF-8',
         success: function() {
             $("div").append('<li>Task:' + data.title + ' Description:' + data.description + 'Status: false</li>');
+            document.getElementById("taskForm").reset();
         }
     });
 
